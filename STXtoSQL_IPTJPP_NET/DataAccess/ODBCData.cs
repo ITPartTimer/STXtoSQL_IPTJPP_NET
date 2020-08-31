@@ -25,7 +25,7 @@ namespace STXtoSQL.DataAccess
                 // NULL values don't work well when going from an ODBC recordset to POCO then to SQL Server
                 // If jpp_part_cust_id is NULL, assign a value of 99999
                 cmd.CommandText = @"select jpp_job_no,jpp_job_itm,jpp_job_sbitm,jpp_invt_typ,jpp_wdth,
-                                    jpp_trgt_ord_info,nvl(jpp_part_cus_id, 99999) as jpp_part_cus_id,jpp_part,jpp_pcs
+                                    jpp_trgt_ord_info,coalesce(jpp_part_cus_id, '99999') as jpp_part_cus_id,jpp_part,jpp_pcs
                                     from iptjpp_rec 
                                     where (jpp_invt_typ <> 'S' and jpp_invt_typ <> 'M')
                                     and jpp_job_no in
@@ -35,7 +35,7 @@ namespace STXtoSQL.DataAccess
                                     on j.job_job_no = s.psh_job_no
                                     where s.psh_whs = 'SW'
                                     and psh_sch_seq_no <> 99999999
-                                    and (job_job_sts = 0 or job_job_sts = 1)
+                                    and (job_job_sts = '0' or job_job_sts = '1')
                                     and (job_prs_cl = 'SL' or job_prs_cl = 'CL' or job_prs_cl = 'MB'))";
 
                 OdbcDataReader rdr = cmd.ExecuteReader();

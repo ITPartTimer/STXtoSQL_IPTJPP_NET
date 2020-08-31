@@ -79,8 +79,8 @@ namespace STXtoSQL_IPTJPP_NET
             #endregion
 
             // Testing
-            Console.WriteLine("Press key to exit");
-            Console.ReadKey();
+            //Console.WriteLine("Press key to exit");
+           //Console.ReadKey();
         }
     }
 }
